@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <h2>URL Shortener</h2>
+
+    <% if (locals.ID) { %>
+        <p>Shortened URL: <a href="http://localhost:3000/url/<%= ID %>">http://localhost:3000/url/<%= ID %></a></p>
+    <% } %>
+
+    <div>
+        <form method="post" action="/url">
+            <label for="redirectUrl">Enter Redirect URL:</label>
+            <input type="text" id="redirectUrl" name="redirectUrl" placeholder="http://example.com..." required>
+            <input type="submit" value="Generate">
+        </form>
+    </div>
+    <br>
+    <br>
+    <% if (locals.data && locals.data.length > 0) { %>
+    <div>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>SR.No</th>
+                    <th>Shortened URL</th>
+                    <th>Redirect URL</th>
+                    <th>Click Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% data.forEach((url, index) => { %>
+                 <tr>
+                    <td><%= index + 1 %></td>
+                    <td><a href="http://localhost:3000/url/<%= url.shortUrl %>" target="_blank"><%= url.shortUrl %></a></td>
+                    <td><a href="<%= url.redirectUrl %>" target="_blank"><%= url.redirectUrl %></a></td>
+                    <td><%= url.urlHistory.length %></td>
+                 </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+    <% } %>
+
+</body>
+</html>
